@@ -1,0 +1,28 @@
+{% extends "base.html" %} {% block title %}Flash Card{% endblock %} {% block
+content %}
+<h1>Team Results for {{team}} vs {{opposition}}</h1>
+<table>
+  <thead>
+    <th>Result</th>
+    <th>Location</th>
+    <th>Date</th>
+  </thead>
+  {% for result in results %}
+  <tr>
+    {% if result.home_team == team %}
+    <td>{{result.home_result}}</td>
+    <td>Home</td>
+    {% else %}
+    <td>{{result.away_result}}</td>
+    <td>Away</td>
+    {% endif %}
+    <td class="c2">{{result.fixture_date.strftime("%b %d, %Y")}}</td>
+  </tr>
+  {% endfor %}
+</table>
+<br />
+
+<p>
+  <a href="{{ url_for('fantleague.welcome') }}">Home</a>
+</p>
+{% endblock %}
