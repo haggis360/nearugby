@@ -1,0 +1,46 @@
+{% extends "base.html" %} {% block title %}League Table{% endblock %} {% block
+content %}
+<h1>
+  League Table at current {{calc_time.season}} and week {{calc_time.game_week}}
+</h1>
+<form method="post">
+  <table>
+    <thead>
+      <th>Player</th>
+      <th>Points</th>
+      <th>Point difference</th>
+      <th>History</th>
+    </thead>
+    {% for player_result in player_results %}
+    <tr>
+      <td>
+        <a
+          href="{{url_for('fantleague.profile', player_id=player_result.user_id)}}"
+          >{{player_result.user_name}}</a
+        >
+      </td>
+      <td>{{player_result.outcome_total}}</td>
+      <td>{{player_result.outcome_diff}}</td>
+      <td>
+        {% for hist in player_history_func(player_result.user_id) %} {% if
+        hist.outcome_total %}
+        <img
+          src="./static/images/check.png"
+          width="32"
+          height="32"
+          alt="correct"
+        />
+        {% else %}
+        <img
+          src="./static/images/cancel.png"
+          width="32"
+          height="32"
+          alt="wrong"
+        />
+        {% endif %} {%endfor %}
+      </td>
+    </tr>
+    {% endfor %}
+  </table>
+</form>
+{% endblock %}

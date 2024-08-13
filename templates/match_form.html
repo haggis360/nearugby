@@ -1,4 +1,4 @@
-{% extends "base.html" %} {% block title %}Flash Card{% endblock %} {% block
+{% extends "base.html" %} {% block title %}Fantasy Rugby{% endblock %} {% block
 content %}
 <h1>Team Results for {{team}} vs {{opposition}}</h1>
 <table>
@@ -10,13 +10,53 @@ content %}
   {% for result in results %}
   <tr>
     {% if result.home_team == team %}
-    <td>{{result.home_result}}</td>
+    <td>
+      {% if 'W'==result.home_result %}<img
+        alt="win"
+        height="32"
+        width="32"
+        src="/static/images/win.png"
+      />
+      {% elif 'L'==result.home_result %}<img
+        alt="lose"
+        height="32"
+        width="32"
+        src="/static/images/lose.png"
+      />
+      {% else %}<img
+        alt="draw"
+        height="32"
+        width="32"
+        src="/static/images/draw.png"
+      />
+      {% endif %}
+    </td>
     <td>Home</td>
     {% else %}
-    <td>{{result.away_result}}</td>
+    <td>
+      {% if 'W'==result.away_result %}<img
+        alt="win"
+        height="32"
+        width="32"
+        src="/static/images/win.png"
+      />
+      {% elif 'L'==result.away_result %}<img
+        alt="lose"
+        height="32"
+        width="32"
+        src="/static/images/lose.png"
+      />
+      {% else %}<img
+        alt="draw"
+        height="32"
+        widthe="32"
+        src="/static/images/draw.png"
+      />
+      {% endif %}
+    </td>
     <td>Away</td>
     {% endif %}
-    <td class="c2">{{result.fixture_date.strftime("%b %d, %Y")}}</td>
+    <td class="c2">{{result.fixture_date[:10]}}</td>
   </tr>
   {% endfor %}
 </table>

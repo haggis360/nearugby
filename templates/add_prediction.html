@@ -1,15 +1,144 @@
 {% extends "base.html" %} {% block title %}Add Prediction{% endblock %} {% block
 content %}
-<h1>Add a new Prediction</h1>
+<h1>
+  Add a new Prediction for
+  <a
+    href="{{ url_for('fantleague.add_prediction', season=season-1, game_week=game_week)}}"
+    ><img src="/static/images/left.png" width="20" height="20" alt="left"
+  /></a>
+  {{season}}
+  <a
+    href="{{ url_for('fantleague.add_prediction',season=season+1, game_week=game_week)}}"
+    ><img src="/static/images/right.png" width="20" height="20" alt="left" /></a
+  >and week
+  <a
+    href="{{ url_for('fantleague.add_prediction', season=season, game_week=game_week-1)}}"
+    ><img src="/static/images/left.png" width="20" height="20" alt="left"
+  /></a>
+  {{game_week}}
+  <a
+    href="{{ url_for('fantleague.add_prediction', season=season, game_week=game_week+1)}}"
+    ><img src="/static/images/right.png" width="20" height="20" alt="left"
+  /></a>
+</h1>
 <form method="post">
-  <p>
-    Question:
-    <input type="text" name="question" />
-  </p>
-  <p>
-    Answer:
-    <input type="text" name="answer" />
-  </p>
-  <button type="submit">Create</button>
+  <table class="predictionTable">
+    <thead>
+      <th>Home</th>
+      <th>Home pt</th>
+      <th>Match Detail</th>
+      <th>Away pt</th>
+      <th>Away</th>
+      <th>Prediction</th>
+      <th>History</th>
+    </thead>
+    {% for prediction in predictions %}
+    <input
+      type="hidden"
+      id="prediction_id"
+      name="prediction_id"
+      value="{{prediction.id}}"
+    />
+    <input
+      type="hidden"
+      id="fixture_id"
+      name="fixture_id"
+      value="{{prediction.fixture_rel.id}}"
+    />
+    <tr>
+      <td style="text-align: right">
+        <a
+          href="{{url_for('fantleague.team_view', team=prediction.fixture_rel.home_team)}}"
+          >{{prediction.fixture_rel.home_team}}<img
+            src="/static/images/{{team_image_func(prediction.fixture_rel.home_team)
+          }}"
+            alt="team image"
+            width="30"
+            height="30"
+        /></a>
+      </td>
+      {%if ro %}
+      <td>{{prediction.home_score}}</td>
+      {% else %}
+      <td>
+        <input
+          type="text"
+          name="home_score"
+          value="{{prediction.home_score}}"
+          size="4"
+        />
+      </td>
+      {% endif %}
+      <td>
+        {{prediction.fixture_rel.date}}<br />
+        {{prediction.fixture_rel.venue}}
+      </td>
+      {%if ro %}
+      <td>{{prediction.away_score}}</td>
+      {% else %}
+      <td>
+        <input
+          type="text"
+          name="away_score"
+          value="{{prediction.away_score}}"
+          size="4"
+        />
+      </td>
+      {% endif %}
+      <td style="text-align: left">
+        <img
+          src="/static/images/{{team_image_func(prediction.fixture_rel.away_team) }}"
+          alt="team image"
+          width="30"
+          height="30"
+        />
+        <a
+          href="{{url_for('fantleague.team_view', team=prediction.fixture_rel.away_team)}}"
+          >{{prediction.fixture_rel.away_team}}</a
+        >
+      </td>
+
+      <td>
+        {%if ro%} {%if pending %}
+        <img
+          src="/static/images/pending.png"
+          width="30"
+          height="30"
+          alt="pending"
+        />
+        {%else%} {% if prediction.prediction_outcome %}
+        <img
+          src="/static/images/check.png"
+          width="30"
+          height="30"
+          alt="correct"
+        />
+        {% else %}
+        <img
+          src="/static/images/cancel.png"
+          width="30"
+          height="30"
+          alt="wrong"
+        />
+        {%endif%}{% endif %} {% endif %}
+      </td>
+      <td>
+        <a
+          href="{{url_for('fantleague.match_view', team=prediction.fixture_rel.home_team, opposition=prediction.fixture_rel.away_team)}}"
+          >Recent results<img
+            src="/static/images/right.png"
+            width="20"
+            height="20"
+            alt="left"
+        /></a>
+      </td>
+    </tr>
+    {% endfor %}
+  </table>
+  {%if ro %}
+  <p class="warning">Cant update predictions in the past</p>
+  {% else %}
+  <button type="submit">Save Predictions</button>
+  {% endif %}
 </form>
 {% endblock %}

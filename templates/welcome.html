@@ -1,21 +1,17 @@
 {% extends "base.html" %} {% block title %}Welcome{% endblock %} {% block
 content %}
-<h1>Welcome to my page!</h1>
+<h1>Welcome to my Fantasy Rugby!</h1>
 <p>
-  This is the demo application for the course
-  <em>Getting Started with Flask</em>
-  on <a href="https://www.pluralsight.com"> Pluralsight</a>.
+  you can see rugby here
+  <em>its great</em>
+  on <a href="https://www.bbc.co.uk"> it is</a>.
 </p>
 
-<h2>Flash Cards</h2>
+<h2>Fantasy Rugby</h2>
 <ul>
-  {% for card in cards %}
   <li>
-    <a href="{{ url_for('fantleague.team_view', team='Wasps') }}">
-      {{ card.question }}
-    </a>
+    <a href="."> </a>
   </li>
-  {% endfor %}
 </ul>
 
 {% endblock %}

@@ -1,5 +1,49 @@
 <!-- templates/profile.html -->
 
 {% extends "base.html" %} {% block content %}
-<h1 class="title">Welcome, {{ name }}!</h1>
-{% endblock %}
+<h1 class="title">Welcome, {{ user.name }}!</h1>
+<h1 class="title">Current Season is {{time_prop.season}}</h1>
+<h1 class="title">Current Week is {{time_prop.game_week}}</h1>
+<table>
+  <thead>
+    <th>History for Player {{player.name}}</th>
+  </thead>
+  <tr>
+    <td>
+      {% for hist in player_history_func(player.id) %} {% if hist.outcome_total
+      %}
+      <img
+        src="/static/images/check.png"
+        width="32"
+        height="32"
+        alt="correct"
+      />
+      {% else %}
+      <img src="/static/images/cancel.png" width="32" height="32" alt="wrong" />
+      {% endif %} {%endfor %}
+    </td>
+  </tr>
+</table>
+
+{% if user.role == 'admin' %}
+<h1 class="title">ADMINISTRATOR FUNCTIONS</h1>
+<form method="post">
+  <table>
+    <thead>
+      <th>Season</th>
+      <th>Game week</th>
+    </thead>
+    <tr>
+      <td>
+        <input type="text" name="season" value="{{time_prop.season}}" />
+      </td>
+      <td>
+        <input type="text" name="game_week" value="{{time_prop.game_week}}" />
+      </td>
+    </tr>
+  </table>
+
+  <button type="submit">Save time and Recalculate Predictions</button>
+</form>
+
+{% endif %} {% endblock %}

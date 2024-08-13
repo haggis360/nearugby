@@ -1,17 +1,79 @@
-{% extends "base.html" %} {% block title %}Flash Card{% endblock %} {% block
+{% extends "base.html" %} {% block title %}Fantasy Rugby{% endblock %} {% block
 content %}
 <h1>Team Results for {{team}}</h1>
 <table>
   {% for result in results %}
   <tr>
-    <td class="c2">{{result.fixture_date.strftime("%b %d, %Y")}}</td>
-    <td class="c3">{{result.home_team}}</td>
+    <td class="c4">
+      {% if 'D'==result.home_result %}
+      <img alt="win" height="32" width="32" src="/static/images/draw.png" />
+      {% elif 'W'==result.home_result %} {% if team == result.home_team %}
+      <img alt="win" height="32" width="32" src="/static/images/win.png" />
+      {% else %}
+      <img alt="win" height="32" width="32" src="/static/images/lose.png" />
+      {% endif %} {% else %} {% if team == result.home_team %}
+      <img alt="win" height="32" width="32" src="/static/images/lose.png" />
+      {% else %}
+      <img alt="win" height="32" width="32" src="/static/images/win.png" />
+      {% endif %} {% endif %} {% if 'W'==result.home_result %}<img
+        alt="win"
+        height="32"
+        width="32"
+        src="/static/images/win.png"
+      />
+      {% elif 'L'==result.home_result %}<img
+        alt="lose"
+        height="32"
+        width="32"
+        src="/static/images/lose.png"
+      />
+      {% else %}
+      <img alt="draw" height="32" widthe="32" src="/static/images/draw.png" />
+      {% endif %}
+    </td>
+    <td class="c3" style="text-align: right">
+      {{result.home_team}}
+      <img
+        src="/static/images/{{team_image_func(result.home_team)
+          }}"
+        alt="team image"
+        width="30"
+        height="30"
+      />
+    </td>
     <td class="c4">{{result.home_score}}</td>
-    <td class="c4">{{result.home_result}}</td>
-    <td class="c5">{{result.away_team}}</td>
+    <td class="c2">
+      {{result.venue}}<br />
+      {{result.fixture_date[:10]}}
+    </td>
+
     <td class="c5">{{result.away_score}}</td>
-    <td class="c5">{{result.away_result}}</td>
-    <td class="c5">{{result.venue}}</td>
+    <td class="c5" style="text-align: left">
+      <img
+        src="/static/images/{{team_image_func(result.away_team)
+          }}"
+        alt="team image"
+        width="30"
+        height="30"
+      />{{result.away_team}}
+    </td>
+    <td class="c5">
+      {% if 'W'==result.away_result %}<img
+        alt="win"
+        height="32"
+        widthe="32"
+        src="/static/images/win.png"
+      />
+      {% elif 'L'==result.away_result %}<img
+        alt="lose"
+        height="32"
+        widthe="32"
+        src="/static/images/lose.png"
+      />
+      {% else %}
+      <img alt="draw" height="32" widthe="32" src="/static/images/draw.png" />{%
+      endif %}
+    </td>
   </tr>
   {% endfor %}
 </table>
@@ -19,19 +81,6 @@ content %}
 
 <p>
   <a href="{{ url_for('fantleague.welcome') }}">Home</a>
-  <button>
-    {% if index < max_index %}
-    <a href="{{ url_for('fantleague.team_view', team='Castres') }}">
-      Next card
-    </a>
-    {% else %}
-    <a href="{{ url_for('fantleague.team_view', team='Wasps') }}">
-      Start over
-    </a>
-    {% endif %}
-  </button>
 </p>
-<a href="{{ url_for('fantleague.remove_card', index=index) }}"
-  >Remove this card</a
->
+
 {% endblock %}

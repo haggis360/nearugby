@@ -1,0 +1,20 @@
+{% extends "base.html" %} {% block title %}Fixtures{% endblock %} {% block
+content %}
+<h1>Fixtures for season {{season}} and game week {{game_week}}</h1>
+<table>
+  <thead>
+    <th>Date</th>
+    <th>Home</th>
+    <th>Away</th>
+    <th>Venue</th>
+  </thead>
+  {% for fixture in fixtures %}
+  <tr>
+    <td>{{fixture.date}}</td>
+    <td>{{fixture.home_team}}</td>
+    <td>{{fixture.away_team}}</td>
+    <td>{{fixture.venue}}</td>
+  </tr>
+  {% endfor %}
+</table>
+{% endblock %}
