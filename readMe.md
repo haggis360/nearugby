@@ -20,6 +20,9 @@ pip freeze > requirements.txt
 to run enter from terminal use . current dir for app so that the **init** is called to register the blueprints into the app
 export FLASK_APP=.
 export FLASK_DEBUG=1
+or windows 
+set FLASK_APP=.
+set FLASK_DEBUG=1
 
 then:
 flask run
