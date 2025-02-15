@@ -42,18 +42,20 @@ def profile(player_id):
 
 @fantleague.route("/profile", methods=["POST"])
 def admin_view():
-    print("POST")
     if current_user.role == "admin":
-        print("ADMIN")
         # save the current season and game week reset all predictions recalculate all results upto that date
         save_time_property(request.form["season"], request.form["game_week"])
         #  whenever this is done teh fullresult history must be reloaded and the db todate then recalc predictions
-        #  model.db = get_season_results_to_date() called in calculation not needed
         prediction_model.calculate_predictions()
-        # return render_template('profile.html', user=current_user, message="UPDATED DATE AND RECALCULATING PREDICTIONS")
         return redirect(url_for("fantleague.profile"))
     else:
         return redirect(url_for("fantleague.profile"))
+
+
+@fantleague.route("/help", methods=["GET"])
+def help():
+    has_admin = current_user.role == "admin"
+    return render_template("help.html", is_admin = has_admin)
 
 
 @fantleague.route("/leagueTable")

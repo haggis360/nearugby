@@ -1,0 +1,32 @@
+<!-- templates/help.html -->
+
+{% extends "base.html" %} {% block content %}
+<h1 class="title">Help Guide</h1>
+<h1 class="title">User Functions</h1>
+<ul>
+  <li>Sign Up <p>Join the league competition by providin an email address and password. 
+    An email address can only be associated to one account. Login to fantasy league using the entered credentials
+  </p></li>
+  <li>League Standings <p> Click on the 'Leader Board' link to show current league positions.
+    1 point is awarded for a correct W/L/D prediction and point difference the sum of all differences between points for and against in each game.
+    The most recent 5 game predictions are shown as a form guide for each player.</p></li>
+  <li>Player profiles <p>You can view the performance of each player in the league by
+    clicking their name from the league table and your own profile from the 'Profile' menu link
+  </p></li>
+  <li>Entering Predictions <p>Predictions can only be entered for game weeks in the future.
+    Advance game weeks by using the menu arrow icons. Enter the score for each Home and Away fixture and 
+    press 'Save Predictions'. Predictions can be changed if they are in advance and will overwrite existing socres.</p></li>
+  <li>Form Guide <p>From the Add Predictions screen select the Team name to see the latest results and full match details 
+    for the chosen team and select 'History' to show the recent results between the same 2 competing teams</p></li>
+</ul>
+<p></p>
+ 
+{% if is_admin %}
+<h1 class="title">ADMINISTRATOR FUNCTIONS</h1>
+<ul>
+<li>Setting the game week<p>An administrator using the proxy system with json file results
+  can manipulate the current time and recalculate prediction outcomes and the table by entering the 
+  desired season and game week then pressing 'Save and recalculate'
+</p></li>
+</ul>
+{% endif %} {% endblock %}

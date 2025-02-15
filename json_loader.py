@@ -35,16 +35,12 @@ class JsonResultLoader(ResultLoader):
         return full_history_db
 
     def is_result_before_date(self, result):
-        # put this somewhere eles a query is run for every result!!!!!!!!!!
-        #   prop = current_time_property()
         season = int(result["season"])
         g_week = int(result["game_week"])
-        #   comp = result["comp_name"] retrieved by compid now so this not elevant
-        # status = result["status"]
         return season < self.season or (
             season == self.season and g_week < self.game_week
-        )  # and (status == JsonResultLoader.RESULT)
-
+        ) 
+    
     # for testing we need to simulate different points in the season to see prediction and past date points
     def get_season_results_to_date(self) -> list:
         self.reload_time_prop()

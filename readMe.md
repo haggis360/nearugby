@@ -27,7 +27,7 @@ set FLASK_DEBUG=1
 then:
 flask run
 
-this also initialisies the db - on my machine its saved to /Users/user/Documents/Martin/python/instance/db.sqlite
+this also initialisies the db - its saved to /Users/user/Documents/User/python/instance/db.sqlite
 
 sample urls
 http://127.0.0.1:5000/match_form/Stade%20Francais/Castres shows the latest match results between those 2 teams
@@ -42,7 +42,7 @@ it generates a script in init_users_predictions.txt which can be run in sql
 
 there are 2 loaders use the property to deterins wheter to use the api loader - production or json loader of cached data for test/dev
 
-this is a systems integraton project, it looks like a website but the overwhelming challenge is in the management and integraton of data. this is very important to me as i think its the most commeon and most important challenge in software engineering. data science and ai optimisation requires the integration of the massive amounts of data that have been collected and stored in diferent formats media and locations. then refining and restructuing this data for optimal use in a separate system. its a challenge as you have no control over the data stored in a 3rd party api or system and must make it work for you, you cannot change the question to what yu know the answer to. yuo must find the answer and this involves struggles i wanted to experience its very satisfying to crack the answers.
+this is a systems integraton project, it looks like a website but the overwhelming challenge has been in the management and integraton of data. this is very important to me as i think its the most commeon and most important challenge in software engineering. data science and ai optimisation requires the integration of the massive amounts of data that have been collected and stored in diferent formats media and locations. then refining and restructuing this data for optimal use in a separate system. its a challenge as you have no control over the data stored in a 3rd party api or system and must make it work for you, you cannot change the question to what yu know the answer to. yuo must find the answer and this involves struggles i wanted to experience its very satisfying to crack the answers.
 i had to cope with
 data format - results and fixtures are not stored in the external api in the same way i needed to separate these into result, predictions and fixtures format
 data quality - on reviewing data different values are used for the same keys in data eg top14, t14, top 14. this needed cleainng and was only apparent on inspecting
@@ -58,10 +58,10 @@ user stories - each role has different use cases available
 public - can view only league tables
 registered user - can enter predictions see their profile including lastes record form
 admin user - can reset the current season and game week triggering league recalcations. this woldl nt be needed in a live system which would run continueously but is here for demo purposes
-images for t4ams - stored in a dictionary, its static and hardcoded, a defulat provided for ones i couldnt find an image for
+images for teams - stored in a dictionary, its static and hardcoded, a defulat provided for ones i couldnt find an image for
 relational db - allows me to run queries for testing in the db and optimise them. let the db do the query work closer to the data source so minimal data is transferred between systems
 security - i have encryoted the user passwords in db so that they aresnt visible to an admin (they could still be decrupted using the secret key if that was kniwn - in production id store that in a keystore)
-security - sql injection to stop malicious sql statements on form input fields i used sql alchemay parameter replacement with typed parameters which encodes stringd passed in
+security - sql injection to stop malicious sql statements on form input fields i used sql alchemy parameter replacement with typed parameters which encodes stringd passed in
 
 structure
 data- calling an ext api
@@ -81,7 +81,7 @@ demo with profile page
 using a user library
 use cases for roles
 screens required
-leage table view
+league table view
 calculating table positions - testing query in sql
 recent player scores
 drill through screens - using flask
