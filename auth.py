@@ -43,10 +43,9 @@ def signup():
 @auth.route("/signup", methods=["POST"])
 def signup_post():
 
-    email = request.form.get("email")
+    email = request.form.get("email").lower()
     name = request.form.get("name")
     password = request.form.get("password")
-
     user = User.query.filter_by(email=email).first()
     # if this returns a user, then the email already exists in database
     # if a user is found, we want to redirect back to signup page so user can try again
