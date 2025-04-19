@@ -116,16 +116,24 @@ def fixture_view(season, game_week):
 def add_prediction(season, game_week):
     try:
         if request.method == "POST":
-            # form has been submitted, process data FOR EACH.........
-            prediction = PlayerPrediction.populate(
-                request.form["prediction_id"],
+            # form has been submitted, process data FOR EACH FIXTURE....
+            fixture_ids = []
+            for fieldname, value in request.form.items():
+                if fieldname.startswith("fixture_id-"):
+                    fixture_ids.append(fieldname.partition("fixture_id-")[2])
+                    
+            for fixture_id in fixture_ids:
+                prediction = PlayerPrediction.populate(
+                request.form["prediction_id-"+fixture_id],
                 current_user.id,
-                request.form["fixture_id"],
-                request.form["home_score"],
-                request.form["away_score"],
-            )
-            # save and redirect
+                fixture_id,
+                request.form["home_score-"+fixture_id],
+                request.form["away_score-"+fixture_id],
+                )
+            # save - create or update each prediction
             prediction_model.save_prediction(prediction)
+
+            # now redirecr after saving all predictions
             return redirect(
                 url_for("fantleague.add_prediction", season=season, game_week=game_week)
             )

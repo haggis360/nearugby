@@ -35,14 +35,14 @@ content %}
     {% for prediction in predictions %}
     <input
       type="hidden"
-      id="prediction_id"
-      name="prediction_id"
+      id="prediction_id-{{prediction.fixture_rel.id}}"
+      name="prediction_id-{{prediction.fixture_rel.id}}"
       value="{{prediction.id}}"
     />
     <input
       type="hidden"
-      id="fixture_id"
-      name="fixture_id"
+      id="fixture_id-{{prediction.fixture_rel.id}}"
+      name="fixture_id-{{prediction.fixture_rel.id}}"
       value="{{prediction.fixture_rel.id}}"
     />
     <tr>
@@ -63,7 +63,7 @@ content %}
       <td>
         <input
           type="text"
-          name="home_score"
+          name="home_score-{{prediction.fixture_rel.id}}"
           value="{{prediction.home_score}}"
           size="4"
         />
@@ -79,7 +79,7 @@ content %}
       <td>
         <input
           type="text"
-          name="away_score"
+          name="away_score-{{prediction.fixture_rel.id}}"
           value="{{prediction.away_score}}"
           size="4"
         />
