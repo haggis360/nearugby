@@ -523,6 +523,7 @@ blockquote footer {
   scrollbar-color: var(--color-scrollbar) transparent;
 }
 
+
 *::-webkit-scrollbar {
   width: 5px;
   height: 5px;
@@ -535,4 +536,11 @@ blockquote footer {
 *::-webkit-scrollbar-thumb {
   background-color: var(--color-scrollbar);
   border-radius: 10px;
+}
+
+.msg{
+    background: #ff9999;
+    color: darkred;
+    padding: 5px;
+    margin-left: 35px;
 }

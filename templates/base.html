@@ -9,15 +9,9 @@
     <section>
       <div>
         <nav>
-          <ul><li>
-                <a href="{{ url_for('fantleague.welcome') }}"> Home </a>
-                </li>
-                <li>
-                <a
-                  href="{{ url_for('fantleague.league_table_view') }}">
-                  Leader Board
-                </a>
-                </li>
+          <ul>
+            <li><a aria-label="Home Page" href="{{ url_for('fantleague.welcome') }}">Home </a></li>
+            <li><a aria-label="Leader Board" href="{{ url_for('fantleague.league_table_view') }}">Leader Board</a></li>
                 {% if current_user.is_authenticated %}
                 <li><a
                   href="{{ url_for('fantleague.profile') }}">
@@ -45,7 +39,20 @@
         </nav>
       </div>
       <div>
-        <div">
+
+        <div>
+          {% with messages = get_flashed_messages() %}
+          {% if messages %}
+              <ul class="msg">
+              {% for message in messages %}
+                  <li >{{ message }}</li>
+              {% endfor %}
+              </ul>
+          {% endif %}
+      {% endwith %}
+        </div>
+
+        <div>
           {% block content %} {% endblock %}
           <form>
             <input type="button" value="Go back!" onclick="history.back()" />

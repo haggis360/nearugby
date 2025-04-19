@@ -1,4 +1,4 @@
-from flask import Blueprint, render_template, abort, request, redirect, url_for
+from flask import Blueprint, render_template, abort, request, redirect, url_for,flash,get_flashed_messages
 from flask_login import login_required, current_user
 from .player_prediction import PlayerPrediction
 from .prediction_model import PredictionModel
@@ -43,14 +43,20 @@ def profile(player_id):
 @fantleague.route("/profile", methods=["POST"])
 def admin_view():
     if current_user.role == "admin":
+        o_season = current_time_property().season
+        o_game_week = current_time_property().game_week
         # save the current season and game week reset all predictions recalculate all results upto that date
         save_time_property(request.form["season"], request.form["game_week"])
         #  whenever this is done teh fullresult history must be reloaded and the db todate then recalc predictions
-        prediction_model.calculate_predictions()
+        try:
+            prediction_model.calculate_predictions()
+        except:
+            flash("Failed to update season and game week so reverting")
+            save_time_property(o_season,o_game_week)
+            return redirect(url_for("fantleague.profile"))  
         return redirect(url_for("fantleague.profile"))
     else:
         return redirect(url_for("fantleague.profile"))
-
 
 @fantleague.route("/help", methods=["GET"])
 def help():
@@ -121,7 +127,12 @@ def add_prediction(season, game_week):
             for fieldname, value in request.form.items():
                 if fieldname.startswith("fixture_id-"):
                     fixture_ids.append(fieldname.partition("fixture_id-")[2])
-                    
+                if (fieldname.startswith("home_score") or fieldname.startswith("away_score")):
+                    if int(value) > 150 or int(value) < 0:
+                        flash("Form error, score "+value+ " must be between 0 and 150 inclusive")
+                        return redirect(url_for("fantleague.add_prediction", season=season, game_week=game_week)
+            )
+
             for fixture_id in fixture_ids:
                 prediction = PlayerPrediction.populate(
                 request.form["prediction_id-"+fixture_id],
@@ -130,8 +141,8 @@ def add_prediction(season, game_week):
                 request.form["home_score-"+fixture_id],
                 request.form["away_score-"+fixture_id],
                 )
-            # save - create or update each prediction
-            prediction_model.save_prediction(prediction)
+                # save - create or update each prediction
+                prediction_model.save_prediction(prediction)
 
             # now redirecr after saving all predictions
             return redirect(
