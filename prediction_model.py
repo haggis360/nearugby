@@ -105,6 +105,8 @@ class PredictionModel:
     def save_prediction(self, prediction: PlayerPrediction):
         # insert
         saved_prediction = PlayerPrediction.query.get(prediction.id)
+        print("SAVE PREDICTION"+prediction.id)
+        print(prediction)
         if not saved_prediction:
             prediction.id = None
             self.db_access.session.add(prediction)

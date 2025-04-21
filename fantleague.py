@@ -135,11 +135,11 @@ def add_prediction(season, game_week):
 
             for fixture_id in fixture_ids:
                 prediction = PlayerPrediction.populate(
-                request.form["prediction_id-"+fixture_id],
-                current_user.id,
-                fixture_id,
-                request.form["home_score-"+fixture_id],
-                request.form["away_score-"+fixture_id],
+                    request.form["prediction_id-"+fixture_id],
+                    current_user.id,
+                    fixture_id,
+                    request.form["home_score-"+fixture_id],
+                    request.form["away_score-"+fixture_id],
                 )
                 # save - create or update each prediction
                 prediction_model.save_prediction(prediction)
